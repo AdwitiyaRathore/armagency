@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Details of Job: {{ acdFormDetail.jobNumber }}</h2>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <a href="{% url 'jobACD:acdUpdate' pk=acdFormDetail.pk %}"><button class="btn btn-success me-md-2" type="button">Update</button></a>
+</div>
+
+<br>
+
+<form method="GET" class="d-grid gap-2 d-md-flex justify-content-md-end" action="{% url 'jobACD:acdTemplate' pk=acdFormDetail.pk %}">
+    <button class="btn btn-outline-success" type="submit">Create ACD</button>
+</form>
+<hr>
+<br>
+<!-- showJobDetail -->
+<h4>For Job:</h4>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 20%;" scope="col ">jobNumber</th>
+            <th style="width: 20%;" scope="col ">bookingNum</th>
+            <th style="width: 20%;" scope="col ">exporterName</th>
+            <th style="width: 20%;" scope="col ">consignee</th>
+            <th style="width: 20%;" scope="col ">nameOfOceanCarrier</th>
+            <th style="width: 20%;" scope="col ">exporterName</th>
+            <th style="width: 20%;" scope="col ">placeOfReceiptOfGood</th>
+            <th style="width: 20%;" scope="col ">portOfLoading</th>
+            <th style="width: 20%;" scope="col ">portOfDestination</th>
+            <th style="width: 20%;" scope="col ">finalDestination</th>
+            <th style="width: 20%;" scope="col ">containerNum</th>
+            <th style="width: 20%;" scope="col ">shippingBillNo</th>
+            <th style="width: 20%;" scope="col ">noOfPkgs</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ acdFormDetail.jobNumber }}</td>
+            <td>{{ acdFormDetail.bookingNum }}</td>
+            <td>{{ acdFormDetail.exporterName }}</td>
+            <td>{{ acdFormDetail.consignee }}</td>
+            <td>{{ acdFormDetail.nameOfOceanCarrier }}</td>
+            <td>{{ acdFormDetail.exporterName }}</td>
+            <td>{{ acdFormDetail.placeOfReceiptOfGood }}</td>
+            <td>{{ acdFormDetail.portOfLoading }}</td>
+            <td>{{ acdFormDetail.portOfDestination }}</td>
+            <td>{{ acdFormDetail.finalDestination }}</td>
+            <td>{{ acdFormDetail.containerNum }}</td>
+            <td>{{ acdFormDetail.shippingBillNo }}</td>
+            <td>{{ acdFormDetail.noOfPkgs }}</td>            
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+{% endblock %}

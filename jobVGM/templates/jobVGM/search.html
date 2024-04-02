@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Searched Results</h1>
+<hr>
+    {% if results %}
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th style="width: 20%;" scope="col ">Exporter Name</th>
+            <th style="width: 20%;" scope="col ">Exporter Address</th>
+            <th style="width: 20%;" scope="col ">IEC no</th>
+            <th style="width: 20%;" scope="col ">Signature</th>
+            <th style="width: 20%;" scope="col ">Today Date</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for job in results %}
+            <tr>
+              <td><a href="{% url 'jobVGM:vgmDetail' pk=job.pk %}">{{ job.exporterName }}</a></td>
+              <td>{{ job.exporterAddress }}</td>
+              <td>{{ job.IEC_no }}</td>
+    
+              {% if job.signatureImg and vgmFormDetail.signatureImg.url %}
+                <td><img src="{{ job.signatureImg.url }}" alt="image" height="=20%" width="20%" class="img-thumbnail"></td>
+              {% else %}
+                <td><img src="#" alt="image" height="=20%" width="20%" class="img-thumbnail"></td>
+              {% endif %}
+              <td>{{ job.todayDate }}</td>
+    
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+
+{% endblock %}

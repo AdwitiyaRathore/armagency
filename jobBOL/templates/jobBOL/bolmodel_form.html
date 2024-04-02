@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+<h5 class="display">BOL Form</h5>
+    <div  style="height: 60vh;">
+        <form method="POST" enctype="multipart/form-data" >
+            {% csrf_token %}
+            {% bootstrap_form form %}
+
+            <input type="submit" value="Update" class="btn btn-primary pd-10">
+        </form>
+        <br><br><br><br><br>
+    </div>
+
+    {% include 'bases/jobBlBase.html' %}
+
+{% endblock %}

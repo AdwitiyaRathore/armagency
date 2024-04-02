@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Searched Results</h1>
+<hr>
+    {% if results %}
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th style="width: 20%;" scope="col ">Booking Num</th>
+            <th style="width: 20%;" scope="col ">Container Num</th>
+            <th style="width: 20%;" scope="col ">Pan No</th>
+            <th style="width: 20%;" scope="col ">CHA Name</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for job in results %}
+            <tr>
+              <td><a href="{% url 'jobOther:otherDetail' pk=job.pk %}">{{ job.bookingNum }}</a></td>
+              <td>{{ job.containerNum }}</td>
+              <td>{{ job.PanNo }}</td>
+              <td>{{ job.ChaName }}</td>
+    
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+
+{% endblock %}

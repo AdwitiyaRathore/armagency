@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+    
+    <nav class="navbar bg-body fixed-bottom">
+        <div class="container-fluid">
+      
+          <div class="dropup-center dropup d-grid gap-4 d-md-flex ">
+              <button class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Exporter Name
+              </button>
+              <ul class="dropdown-menu">
+                  {% for exporterName in unique_exporterName %}
+                      <li><button class="dropdown-item" type="button">{{ exporterName }}</button></li>
+                      <li><button class="btn btn-sm btn-info copy-button" type="button" onclick="copyToClipboard('{{ exporterName }}')">Copy</button></li>
+                  {% endfor %}
+              </ul>
+    
+              <button class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Exporter Address
+              </button>
+    
+              <ul class="dropdown-menu">
+                {% for exporterAddress in unique_exporterAddress %}
+                    <li class="d-flex justify-content-between">
+                        <button class="dropdown-item" type="button">{{ exporterAddress }}</button>
+                        <li><button class="btn btn-sm btn-info copy-button" type="button" onclick="copyToClipboard('{{ exporterAddress }}')">Copy</button></li>
+                    </li>
+                {% endfor %}
+            </ul>
+    
+            <button class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Booking Num
+              </button>
+    
+            <ul class="dropdown-menu">
+                {% for bookingNum in unique_bookingNum %}
+                    <li><button class="dropdown-item" type="button">{{ bookingNum }}</button></li>
+                    <li><button class="btn btn-sm btn-info copy-button" type="button" onclick="copyToClipboard('{{ bookingNum }}')">Copy</button></li>    
+                {% endfor %}
+            </ul>
+    
+            <button class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Forwarder
+              </button>
+    
+            <ul class="dropdown-menu">
+                {% for NameOfAuthorised in unique_NameOfAuthorised %}
+                    <li><button class="dropdown-item" type="button">{{ NameOfAuthorised }}</button></li>
+                    <li><button class="btn btn-sm btn-info copy-button" type="button" onclick="copyToClipboard('{{ NameOfAuthorised }}')">Copy</button></li>    
+                {% endfor %}
+            </ul>
+
+            <button class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Forwarder
+            </button>
+  
+            <ul class="dropdown-menu">
+                {% for DesignationOfAuthorised in unique_DesignationOfAuthorised %}
+                    <li><button class="dropdown-item" type="button">{{ DesignationOfAuthorised }}</button></li>
+                    <li><button class="btn btn-sm btn-info copy-button" type="button" onclick="copyToClipboard('{{ DesignationOfAuthorised }}')">Copy</button></li>    
+                {% endfor %}
+            </ul>
+
+            <button class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Forwarder
+            </button>
+  
+            <ul class="dropdown-menu">
+                {% for contactDetail in unique_contactDetail %}
+                    <li><button class="dropdown-item" type="button">{{ contactDetail }}</button></li>
+                    <li><button class="btn btn-sm btn-info copy-button" type="button" onclick="copyToClipboard('{{ contactDetail }}')">Copy</button></li>    
+                {% endfor %}
+            </ul>
+            
+            </div>
+        </div>
+      </nav>
+
+      <div class="container">
+        {% block content2 %}
+
+      {% endblock %}
+      </div>
+
+      <script>
+        function copyToClipboard(value) {
+            try {
+                var tempInput = document.createElement("input");
+                tempInput.style.position = "absolute";
+                tempInput.style.left = "-1000px";
+                tempInput.value = value;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+                console.log("Copied to clipboard:", value);
+            } catch (err) {
+                console.error("Unable to copy to clipboard", err);
+                alert("Unable to copy to clipboard. Please try manually.");
+            }
+        }
+    </script>
+</body>
+</html>

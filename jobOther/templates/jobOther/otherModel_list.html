@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="GET" action="{% url 'jobOther:search' %}" class="d-flex" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+<br>
+
+<h2>List of the job</h2>
+
+<br>
+<!-- showList -->
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="width: 20%;" scope="col">bookingNum</th>
+        <th style="width: 20%;" scope="col">containerNum</th>
+        <th style="width: 20%;" scope="col">ChaName</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        {% for items in otherList %}
+            <tr>
+                <td><a href="{% url 'jobOther:otherDetail' pk=items.pk %}" class="link-opacity-25-hover">{{ items.bookingNum }}</a></td>
+                <td>{{ items.containerNum }}</td>
+                <td>{{ items.ChaName }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+
+{% endblock %}

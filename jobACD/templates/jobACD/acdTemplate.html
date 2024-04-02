@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <center><b><u><h1>{{ acdForm.exporterName }}</h1></u></b></center>
+    <center><h6>{{ acdForm.exporterAddress }}</h6></center>
+
+    <br>
+    <center><b><h6><u>DATA ELEMENTS IN THE ADVANCE CARGO DECLARATION</u></h6></b></center>
+
+    <div class="container">
+        <table class="table mx-auto p-2" style="width: 900px;">
+            <tbody>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">01. Booking No. Assigned by Ocean Carrier</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.bookingNum }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">02. Shipper (Full Address)</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.exporterAddress }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">03. Consignee (Full Address with ZipCode)</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.consignee }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">04. Name of Ocean Carrier</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;"></td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">05. Vessel Name of Voy No.</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;"></td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">06. Place of Receipt</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.placeOfReceiptOfGood }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">07. Port of Loading</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.portOfLoading }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">08. Port of Discharge</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.portOfDischarge }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">09. Place Of Delivery With State Code</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.placeOfDeliveryWithStateCode }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">10. Container Number</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.containerNum }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">11. Seal Number [s]</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.customSeal }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">12. Shipping Bill No</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.shippingBillNo }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">13. Cargo Marks and Numbers</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.marks }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">14. Number and Type of Packages</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.noOfPkgs }}  CASES</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">15. Full Commodity Description</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.fullCommondityDescription }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">16. Gross Weight of Cargo [Kilos]</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.grossWt }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">17. HTS Code [6 Digit]</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.htsCode }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">18. Place of Issue of Cargo Declaration</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.placeOfIssueOfCargo }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">19. Date of Issue of Cargo Declaration</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.dateOfIssueOfCargo }}</td>
+                </tr>
+                
+                <tr>
+                    <td colspan="2" class="border border-0">
+                        <p>The owner of the cargo certificate that the particulars described above are true and complete to their best information and belief</p>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="border border-0" style="width: 50%;">20. Name of Shipper</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">{{ acdForm.exporterName }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-0" style="width: 50%;">21. Name of Person Singing and Signature</td>
+                    <td class="border border-0" style="width: 25%;">:</td>
+                    <td class="border border-0" style="width: 25%;">
+                        {% if acdForm.signatureImg and acdForm.signatureImg.url %}
+                            <td class="border border-0"><img src="{{ acdForm.signatureImg.url }}" alt="image" height="=10%" width="10%"><br>{{ acdForm.NameOfAuthorised }}</td>
+                        {% else %}
+                            <td class="border border-0"><img src="#" alt="image" height="=10%" width="10%">{{ acdForm.NameOfAuthorised }}</td>
+                        {% endif %}                    
+                    </td>
+                </tr>
+            </tbody>    
+        </table>
+    </div>
+
+
+{% endblock %}

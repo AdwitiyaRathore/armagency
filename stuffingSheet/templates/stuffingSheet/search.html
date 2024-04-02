@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Searched Results</h1>
+<hr>
+    {% if results %}
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th style="width: 20%;" scope="col ">Exporter Name</th>
+            <th style="width: 20%;" scope="col ">Consignee</th>
+            <th style="width: 20%;" scope="col ">Booking No</th>
+            <th style="width: 20%;" scope="col ">Port Of Loading</th>
+            <th style="width: 20%;" scope="col ">Port Of Destination</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for job in results %}
+            <tr>
+              <td><a href="{% url 'stuffingSheet:stuffingSheetDetail' pk=job.pk %}">{{ job.exporterName }}</a></td>
+              <td>{{ job.consignee }}</td>
+              <td>{{ job.bookingNum }}</td>
+              <td>{{ job.portOfLoading }}</td>
+              <td>{{ job.portOfDestination }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+
+{% endblock %}

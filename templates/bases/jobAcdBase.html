@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+        <div class="container">
+      
+          <div class="dropup-center dropup d-grid gap-4 d-md-flex ">
+              <button class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Consignee
+              </button>
+              <ul class="dropdown-menu">
+                  {% for consignee in unique_consignee %}
+                      <li><button class="dropdown-item" type="button">{{ consignee }}</button></li>
+                      <li><button class="btn btn-sm btn-info copy-button" type="button" onclick="copyToClipboard('{{ consignee }}')">Copy</button></li>
+                  {% endfor %}
+              </ul>
+    
+              <button class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Exporter Address
+              </button>
+    
+              <ul class="dropdown-menu">
+                {% for exporterAddress in unique_exporterAddress %}
+                    <li class="d-flex justify-content-between">
+                        <button class="dropdown-item" type="button">{{ exporterAddress }}</button>
+                        <li><button class="btn btn-sm btn-info copy-button" type="button" onclick="copyToClipboard('{{ exporterAddress }}')">Copy</button></li>
+                    </li>
+                {% endfor %}
+            </ul>
+    
+            <button class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Booking Num
+              </button>
+    
+            <ul class="dropdown-menu">
+                {% for bookingNum in unique_bookingNum %}
+                    <li><button class="dropdown-item" type="button">{{ bookingNum }}</button></li>
+                    <li><button class="btn btn-sm btn-info copy-button" type="button" onclick="copyToClipboard('{{ bookingNum }}')">Copy</button></li>    
+                {% endfor %}
+            </ul>
+    
+            <button class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Shipping Bill No
+              </button>
+    
+            <ul class="dropdown-menu">
+                {% for shippingBillNo in unique_shippingBillNo %}
+                    <li><button class="dropdown-item" type="button">{{ shippingBillNo }}</button></li>
+                    <li><button class="btn btn-sm btn-info copy-button" type="button" onclick="copyToClipboard('{{ shippingBillNo }}')">Copy</button></li>    
+                {% endfor %}
+            </ul>
+            <button class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Custom Seal
+              </button>
+    
+            <ul class="dropdown-menu">
+                {% for customSeal in unique_customSeal %}
+                    <li><button class="dropdown-item" type="button">{{ customSeal }}</button></li>
+                    <li><button class="btn btn-sm btn-info copy-button" type="button" onclick="copyToClipboard('{{ customSeal }}')">Copy</button></li>    
+                {% endfor %}
+            </ul>
+    
+            </div>
+        </div>
+      </nav>
+
+      <div class="container">
+        {% block content2 %}
+
+      {% endblock %}
+      </div>
+
+      <script>
+        function copyToClipboard(value) {
+            try {
+                var tempInput = document.createElement("input");
+                tempInput.style.position = "absolute";
+                tempInput.style.left = "-1000px";
+                tempInput.value = value;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+                console.log("Copied to clipboard:", value);
+            } catch (err) {
+                console.error("Unable to copy to clipboard", err);
+                alert("Unable to copy to clipboard. Please try manually.");
+            }
+        }
+    </script>
+</body>
+</html>

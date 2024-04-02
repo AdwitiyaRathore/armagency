@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    <p>Are you sure you want to delete {{ dataOfJob.jobNumber }}?</p>
+    <input type="submit" class="btn btn-danger" name="" id="Confirm">
+</form>
+
+{% endblock %}

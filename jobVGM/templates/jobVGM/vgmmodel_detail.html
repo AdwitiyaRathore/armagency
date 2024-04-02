@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Details of Job: {{ vgmFormDetail.jobNumber }}</h2>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <a href="{% url 'jobVGM:vgmUpdate' pk=vgmFormDetail.pk %}"><button class="btn btn-success me-md-2" type="button">Update</button></a>
+</div>
+
+<hr>
+<br>
+<!-- vgmFormDetail -->
+<h4>For Job:</h4>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="width: 20%;" scope="col ">Job Number</th>
+        <th style="width: 20%;" scope="col ">Exporter Name</th>
+        <th style="width: 20%;" scope="col ">IEC no</th>
+        <th style="width: 20%;" scope="col ">Name Of Authorised</th>
+        <th style="width: 20%;" scope="col ">Booking Num</th>
+        <th style="width: 20%;" scope="col ">Designation Of Authorised</th>
+        <th style="width: 20%;" scope="col ">Contact Detail</th>
+        <th style="width: 20%;" scope="col ">Container Num</th>
+        <th style="width: 20%;" scope="col ">Size_20</th>
+        <th style="width: 20%;" scope="col ">Size_40</th>
+        <th style="width: 20%;" scope="col ">Permissible Weight</th>
+        <th style="width: 20%;" scope="col ">Weigh Bridge Registration</th>
+        <th style="width: 20%;" scope="col ">Weigh Bridge Address</th>
+        <th style="width: 20%;" scope="col ">Empty Container Mass</th>
+        <th style="width: 20%;" scope="col ">Good Mass</th>
+        <th style="width: 20%;" scope="col ">Cargo Weight</th>
+        <th style="width: 20%;" scope="col ">Container Weight</th>
+        <th style="width: 20%;" scope="col ">Verified Gross Mass</th>
+        <th style="width: 20%;" scope="col ">Signature</th>
+        <th style="width: 20%;" scope="col ">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>{{ vgmFormDetail.jobNumber}}</td>
+          <td>{{ vgmFormDetail.exporterName}}</td>
+          <td>{{ vgmFormDetail.IEC_no}}</td>
+          <td>{{ vgmFormDetail.NameOfAuthorised}}</td>
+          <td>{{ vgmFormDetail.bookingNum}}</td>
+          <td>{{ vgmFormDetail.DesignationOfAuthorised}}</td>
+          <td>{{ vgmFormDetail.contactDetail}}</td>
+          <td>{{ vgmFormDetail.containerNum}}</td>
+
+          {% if vgmFormDetail.size_20 == True and vgmFormDetail.size_40 == True %}
+            <td>20</td>
+            <td>40</td>
+          {% elif vgmFormDetail.size_20 == True and vgmFormDetail.size_40 == False %}
+            <td>20</td>
+            <td>0</td>
+          {% elif vgmFormDetail.size_20 == False and vgmFormDetail.size_40 == True %}
+            <td>0</td>
+            <td>40</td>
+          {% endif %}
+          
+          <td>{{ vgmFormDetail.permissibleWeight}}</td>
+          <td>{{ vgmFormDetail.WeighBridgeRegistration}}</td>
+          <td>{{ vgmFormDetail.WeighBridgeAddress}}</td>
+          <td>{{ vgmFormDetail.emptyContainerMass}}</td>
+          <td>{{ vgmFormDetail.goodMass}}</td>
+          <td>{{ vgmFormDetail.cargoWeight}}</td>
+          <td>{{ vgmFormDetail.containerWeight}}</td>
+          <td>{{ vgmFormDetail.verifiedGrossMass}}</td>
+
+
+          {% if vgmFormDetail.signatureImg and vgmFormDetail.signatureImg.url %}
+            <td><img src="{{ vgmFormDetail.signatureImg.url }}" alt="image" height="=90%" width="90%"></td>
+          {% else %}
+            <td><img src="#" alt="image" height="=20%" width="20%" class="img-thumbnail"></td>
+          {% endif %}
+          <td>{{ vgmFormDetail.todayDate }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    VGM List
+  </a>
+  {% if vgmFormDetail.signatureImg %}
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type1Detail' pk=vgmFormDetail.pk %}">HaPag</a></li>
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type1Detail' pk=vgmFormDetail.pk %}">CosCo</a></li>
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type1Detail' pk=vgmFormDetail.pk %}">oocL</a></li>
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type1Detail' pk=vgmFormDetail.pk %}">MSK</a></li>
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type1Detail' pk=vgmFormDetail.pk %}">Bayline</a></li>
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type1Detail' pk=vgmFormDetail.pk %}">SCI</a></li>
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type1Detail' pk=vgmFormDetail.pk %}">Hamburg Sud</a></li>
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type1Detail' pk=vgmFormDetail.pk %}">HMM</a></li>
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type2Detail' pk=vgmFormDetail.pk %}">MSC</a></li>  <!-- This is of different format and "MSK" is of different format -->
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type3Detail' pk=vgmFormDetail.pk %}">CMA</a></li>
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type3Detail' pk=vgmFormDetail.pk %}">ANL</a></li>
+    <li><a class="dropdown-item" href="{% url 'jobVGM:type4Detail' pk=vgmFormDetail.pk %}">Evergreen Line</a></li>
+  </ul>
+  {% endif %}
+</div>
+{% endblock %}

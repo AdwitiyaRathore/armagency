@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Details of Job: {{ showJobDetail.jobNumber }}</h2>
+
+<hr>
+<br>
+<!-- showJobDetail -->
+<h4>For Job:</h4>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">S no</th>
+        <th scope="col">Job Number</th>
+        <!-- <th scope="col">No Of Booking</th> -->
+        <th scope="col">Shipping Line</th>
+        <th scope="col">Forwarder</th>
+        <th scope="col">Booking Number</th>
+        <th scope="col">Size of 20</th>
+        <th scope="col">Size of 40</th>
+        <th scope="col">Tues of 20</th>
+        <th scope="col">Tues of 40</th>
+        <th scope="col">Exporter Name</th>
+        <th scope="col">Exporter Address</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ showJobDetail.jobNumber }}</td>
+            <!-- <td>{{ showJobDetail.noOfBooking }}</td> -->
+            <td>{{ showJobDetail.shippingLine }}</td>
+            <td>{{ showJobDetail.Forwarder }}</td>
+            <td>{{ showJobDetail.bookingNum }}</td>
+
+            {% if showJobDetail.size_20 == True and showJobDetail.size_40 == True %}
+              <td>20</td>
+              <td>40</td>
+            {% elif showJobDetail.size_20 == True and showJobDetail.size_40 == False %}
+              <td>20</td>
+              <td>0</td>
+            {% elif showJobDetail.size_20 == False and showJobDetail.size_40 == True %}
+              <td>0</td>
+              <td>40</td>
+            {% endif %}
+            
+            <td>{{ showJobDetail.tues_1 }}</td>
+            <td>{{ showJobDetail.tues_2 }}</td>
+            <td>{{ showJobDetail.exporterName }}</td>
+            <td>{{ showJobDetail.exporterAddress }}</td>
+        </tr>
+    </tbody>
+</table>
+<div class="d-grid gap-2 d-md-flex justify-content-md">
+  <a href="{% url 'jobData:updateJob' pk=showJobDetail.pk %}"><button class="btn btn-success me-md-2" type="button">Update</button></a>
+  <a href="{% url 'jobData:deleteJob' pk=showJobDetail.pk %}"><button class="btn btn-danger" type="button">Remove</button></a>
+</div>
+
+<br>
+<hr>
+<div class="d-grid gap-2 d-md-flex justify-content-md">
+<br>
+
+    <a href="{% url 'jobVGM:vgmUpdate' pk=showJobDetail.pk %}"><button class="btn btn-info" type="button">VGM Form</button></a>
+    <a href="{% url 'jobBOL:bolUpdate' pk=showJobDetail.pk %}"><button class="btn btn-info" type="button">Bill of Landing Form</button></a>
+    <a href="{% url 'jobACD:acdUpdate' pk=showJobDetail.pk %}"><button class="btn btn-info" type="button">ACD Form</button></a>
+    <a href="{% url 'stuffingSheet:stuffingSheetUpdate' pk=showJobDetail.pk %}"><button class="btn btn-info" type="button">Stuffing Sheet</button></a>
+<!-- </div> -->
+</div>
+<hr>
+
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="GET" action="{% url 'jobData:search' %}" class="d-flex" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+
+<br>
+
+<a class="btn btn-success" href="{% url 'jobData:jobFilterList' %}" role="button">
+  Filter
+</a>
+
+<br><br>
+
+<h2>List of the job</h2>
+
+<br>
+<!-- showJobList -->
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">S no</th>
+        <th scope="col">Job Number</th>
+        <!-- <th scope="col">No Of Booking</th> -->
+        <th scope="col">Shipping Line</th>
+        <th scope="col">Forwarder</th>
+        <th scope="col">Booking Number</th>
+        <th scope="col">Size of 20</th>
+        <th scope="col">Size of 40</th>
+        <th scope="col">Tues of 20</th>
+        <th scope="col">Tues of 40</th>
+        <th scope="col">Exporter Name</th>
+        <th scope="col">Exporter Address</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for items in showJobList %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url 'jobData:jobDetail' pk=items.pk %}" class="link-opacity-25-hover">{{ items.jobNumber }}</a></td>
+                <!-- <td>{{ items.noOfBooking }}</td> -->
+                <td>{{ items.shippingLine }}</td>
+                <td>{{ items.Forwarder }}</td>
+                <td>{{ items.bookingNum }}</td>
+                <td>{{ items.size_20 }}</td>
+                <td>{{ items.size_40 }}</td>
+                <td>{{ items.tues_1 }}</td>
+                <td>{{ items.tues_2 }}</td>
+                <td>{{ items.exporterName }}</td>
+                <td>{{ items.exporterAddress }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

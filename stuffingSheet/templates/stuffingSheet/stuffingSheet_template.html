@@ -1,0 +1,186 @@
+{% include 'base.html' %}
+
+{% block content %}
+
+{% if stuffingResults %}
+
+{% for i in stuffingResults %}
+
+    {% if forloop.first %}
+
+        <center><h1>{{ i.depot }}</h1></center>
+        <div class="table container">
+            <center><h6>({{ i.depotAddress }})</h6></center>
+            <center><h5>CONTAINER STUFFING SHEET</h5></center>
+            <table class="gap-2 d-md-flex justify-content-md-end">
+                <tbody class="border border-dark">
+                    <tr>
+                        <td></td>
+                        <td>{{ i.stuffingType }}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>BOOKING NO</td>
+                        <td></td>
+                        <td>{{ i.bookingNum }}</td>
+                    </tr>
+                    <tr>
+                        <td>INVOICE NUMBER</td>
+                        <td></td>
+                        <td>{{ i.invoiceNo }}</td>
+                    </tr>
+                    <tr>
+                        <td>SHUTOUT</td>
+                        <td></td>
+                        <td>{{ i.shutout }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container">
+            <table class="table">
+                <tr>
+        
+                    <td class="border border-0" style="width: 25%;">Container No:</td>
+                        <td style="width: 25%;" class="border-bottom">
+                            <table>
+                                <tbody>
+                                    {% for data in stuffingResults %}
+                                    <tr>
+                                        <td class="border border-0" style="width: 25%;">{{ data.containerNum }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </td>
+                    
+
+                    <td class="border border-0" style="width: 25%;">Size</td>
+                            <td class="col-md-4 border-bottom" style="width: 25%;">
+                                <table>
+                                    <tbody>
+                                        {% for data in stuffingResults %}
+                                            {% if data.size_20 == True and data.size_40 == True %}
+                                                <tr>
+                                                    <td>20, 40</td>
+                                                </tr>
+                                            {% elif data.size_40 == True %}
+                                                <tr>
+                                                    <td>40</td>
+                                                </tr>
+                                            {% elif  data.size_20 == True %}
+                                                <tr>
+                                                    <td>20</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4 border border-0" style="width: 25%;">Date Of Stuffing: </td>
+
+                    <td class="col-md-4 border-bottom" style="width: 25%;">{{ i.dateOfStuffing }}</td>
+                    <td class="col-md-4 border border-0" style="width: 25%;">Destination: </td>
+                    
+                    <td class="col-md-4 border-bottom" style="width: 25%;">{{ i.portOfDestination }}</td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4 border border-0" style="width: 25%;">Shipping Line:</td>
+                    
+                    <td class="col-md-4 border-bottom" style="width: 25%;">{{ i.shippingLine }}</td>
+
+                    <td class="col-md-4 border border-0" style="width: 25%;">Shipping Line Seal No.: </td>
+                        <td class="col-md-4 border-bottom" style="width: 25%;">
+                            <table>
+                                <tbody> 
+                                    {% for data in stuffingResults %}                                   
+                                    <tr>
+                                        <td>                                            
+                                                {{ data.shippingLineSeal }}    
+                                        </td>
+                                    </tr>   
+                                    {% endfor %}                                 
+                                </tbody>
+                            </table>
+                        </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4 border border-0" style="width: 25%;">Customs/ Self Seal: </td>
+                    <td class="col-md-4 border-bottom" style="width: 25%;">
+                        <table>
+                            <tbody>                                        
+                                {% for data in stuffingResults %}                            
+                                <tr>
+                                    <td>
+                                        {{ data.customSeal }}    
+                                    </td>
+                                </tr>                                                        
+                                {% endfor %}            
+                            </tbody>
+                        </table>                                           
+                    </td>
+                    <td class="col-md-4 border border-0" style="width: 25%;">Port Of Loading</td>
+                    <td class="col-md-4 border-bottom" style="width: 25%;">{{ i.portOfLoading }}</td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="container">
+            <table class="table table-bordered border border-black">
+                <tbody>
+                    <tr>
+                        <td style="width: 5%;" >S.No</td>
+                        <td style="width: 20%;">Shipping Bill No. & Date</td>
+                        <td style="width: 30%;">Name Of Exporter</td>
+                        <td style="width: 15%;">Name of Goods</td>
+                        <td style="width: 10%;">No. of Pkgs</td>
+                        <td style="width: 10%;">Gross Wt. Kgs</td>
+                        <td style="width: 10%;">Value INR</td>
+                    </tr>
+
+                    {% for data in stuffingResults %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="col-md-4 border-bottom border-dark">{{ data.shippingBillNo }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ data.shippingBillDate }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+
+                        <td>{{ i.exporterName }}</td>
+                        <td>{{ data.nameOfGood }}</td>
+                        <td>{{ data.noOfPkgs }}</td>
+                        <td>{{ data.grossWt }}</td>
+                        <td>{{ data.valueINR }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td>TOTAL</td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ total_pkg_sum }}</td>
+                        <td>{{ total_gross_wt_sum }}</td>
+                        <td>{{ total_value_inr_sum }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    {% endfor %}
+
+{% endif %}
+{% endblock %}

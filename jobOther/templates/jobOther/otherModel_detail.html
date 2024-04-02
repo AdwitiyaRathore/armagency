@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Details:</h2>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <a href="{% url 'jobOther:otherUpdate' pk=otherDetail.pk %}"><button class="btn btn-success me-md-2" type="button">Update</button></a>
+</div>
+
+<hr>
+<br>
+<!-- vgmFormDetail -->
+<h4>For Job:</h4>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="width: 20%;" scope="col ">bookingNum</th>
+        <th style="width: 20%;" scope="col ">containerNum</th>
+        <th style="width: 20%;" scope="col ">doExpityDate</th>
+        <th style="width: 20%;" scope="col ">dispatchDate</th>
+        <th style="width: 20%;" scope="col ">invoiceDate</th>
+        <th style="width: 20%;" scope="col ">containerMethodType</th>
+        <th style="width: 20%;" scope="col ">PanNo</th>
+        <th style="width: 20%;" scope="col ">vessealCutOffDate</th>
+        <th style="width: 20%;" scope="col ">handoverDate</th>
+        <th style="width: 20%;" scope="col ">allotmentDate</th>
+        <th style="width: 20%;" scope="col ">ChaName</th>
+        <th style="width: 20%;" scope="col ">seaPortInDate</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>{{ otherDetail.bookingNum }}</td>
+          <td>{{ otherDetail.containerNum }}</td>
+          <td>{{ otherDetail.doExpityDate }}</td>
+          <td>{{ otherDetail.dispatchDate }}</td>
+          <td>{{ otherDetail.invoiceDate }}</td>
+          <td>{{ otherDetail.containerMethodType }}</td>
+          <td>{{ otherDetail.PanNo }}</td>
+          <td>{{ otherDetail.vessealCutOffDate }}</td>
+          <td>{{ otherDetail.handoverDate }}</td>
+          <td>{{ otherDetail.allotmentDate }}</td>
+          <td>{{ otherDetail.ChaName }}</td>
+          <td>{{ otherDetail.seaPortInDate }}</td>
+ 
+
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

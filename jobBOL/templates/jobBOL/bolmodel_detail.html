@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Details of Job: {{ bolFormDetail.containerNum }}</h2>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <a href="{% url 'jobBOL:bolUpdate' pk=bolFormDetail.pk %}"><button class="btn btn-success me-md-2" type="button">Update</button></a>
+</div>
+
+<hr>
+<br>
+<!-- showJobDetail -->
+<h4>For Job:</h4>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 20%;" scope="col ">Job Number</th>
+            <th style="width: 20%;" scope="col ">Exporter Name</th>
+            <th style="width: 20%;" scope="col ">Description Of Good</th>
+            <th style="width: 20%;" scope="col ">Shipping Bill No</th>
+            <th style="width: 20%;" scope="col ">Consignee</th>
+            <th style="width: 20%;" scope="col ">Notify Delivery</th>
+            <th style="width: 20%;" scope="col ">Booking Num</th>
+            <th style="width: 20%;" scope="col ">Shipping Line</th>
+            <th style="width: 20%;" scope="col ">Arm Address</th>
+            <th style="width: 20%;" scope="col ">Initial Carriage Mode</th>
+            <th style="width: 20%;" scope="col ">Place Of Receipt Of Good</th>
+            <th style="width: 20%;" scope="col ">Container Num</th>
+            <th style="width: 20%;" scope="col ">Port Of Loading</th>
+            <th style="width: 20%;" scope="col ">Port Of Destination</th>
+            <th style="width: 20%;" scope="col ">Final Destination</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ bolFormDetail.jobNumber }}</td>
+            <td>{{ bolFormDetail.exporterName }}</td>
+            <td>{{ bolFormDetail.descriptionOfGood }}</td>
+            <td>{{ bolFormDetail.shippingBillNo }}</td>
+            <td>{{ bolFormDetail.consignee }}</td>
+            <td>{{ bolFormDetail.notifyDelivery }}</td>
+            <td>{{ bolFormDetail.bookingNum }}</td>
+            <td>{{ bolFormDetail.shippingLine }}</td>
+            <td>{{ bolFormDetail.armAddress }}</td>
+            <td>{{ bolFormDetail.initialCarriage_mode }}</td>
+            <td>{{ bolFormDetail.placeOfReceiptOfGood }}</td>
+            <td>{{ bolFormDetail.containerNum }}</td>
+            <td>{{ bolFormDetail.portOfLoading }}</td>
+            <td>{{ bolFormDetail.portOfDestination }}</td>
+            <td>{{ bolFormDetail.finalDestination }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+{% endblock %}

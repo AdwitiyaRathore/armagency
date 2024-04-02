@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="GET" action="{% url 'jobBOL:search' %}" class="d-flex" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+<br>
+
+<form method="GET" class="d-grid gap-2 d-md-flex justify-content-md-end" action="{% url 'jobBOL:bolTemplate' %}">
+  <input class="input-group-text" type="text" placeholder="Booking Number" name="bookingNum">
+  <button class="btn btn-outline-success" type="submit">Create Bol</button>
+</form>
+
+<br>
+<h2>List of the job</h2>
+
+<br>
+<!-- showList -->
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <tr>
+            <th style="width: 20%;" scope="col ">Exporter Name</th>
+            <th style="width: 20%;" scope="col ">Consignee</th>
+            <th style="width: 20%;" scope="col ">Booking No</th>
+            <th style="width: 20%;" scope="col ">Shipping Line</th>
+            <th style="width: 20%;" scope="col ">Port Of Loading</th>
+            <th style="width: 20%;" scope="col ">Container Num</th>
+          
+          </tr>
+    </thead>
+    <tbody>
+        {% for items in bolList %}
+        <tr>
+            <td><a href="{% url 'jobBOL:bolDetail' pk=items.pk %}">{{ items.exporterName }}</a></td>
+            <td>{{ items.consignee }}</td>
+            <td>{{ items.bookingNum }}</td>
+            <td>{{ items.shippingLine }}</td>
+            <td>{{ items.portOfLoading }}</td>
+            <td>{{ items.containerNum }}</td>
+
+          </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+
+{% endblock %}

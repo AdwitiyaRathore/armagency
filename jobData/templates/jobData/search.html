@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Searched Results</h3>
+<hr>
+    {% if results %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">S no</th>
+                    <th scope="col">Job Number</th>
+                    <th scope="col">No Of Booking</th>
+                    <th scope="col">Shipping Line</th>
+                    <th scope="col">Forwarder</th>
+                    <th scope="col">Booking Number</th>
+                    <th scope="col">Size of 20</th>
+                    <th scope="col">Size of 40</th>
+                    <th scope="col">Tues of 20</th>
+                    <th scope="col">Tues of 40</th>
+                    <th scope="col">Exporter Name</th>
+                    <th scope="col">Exporter Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in results %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'jobVGM:vgmDetail' pk=job.pk %}" class="link-opacity-25-hover">{{ job.jobNumber }}</a></td>
+                        <td>{{ job.noOfBooking }}</td>
+                        <td>{{ job.shippingLine }}</td>
+                        <td>{{ job.Forwarder }}</td>
+                        <td>{{ job.bookingNum }}</td>
+                        <td>{{ job.size_20 }}</td>
+                        <td>{{ job.size_40 }}</td>
+                        <td>{{ job.tues_1 }}</td>
+                        <td>{{ job.tues_2 }}</td>
+                        <td>{{ job.exporterName }}</td>
+                        <td>{{ job.exporterAddress }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+
+{% endblock %}

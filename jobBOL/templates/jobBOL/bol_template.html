@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center><h3>DRAFT BILL OF LANDING</h3></center>
+{% if results %}
+
+{% for i in results %}
+{% if forloop.first %}
+<table class="table table-bordered border border-black border-3">
+    <tbody class="">
+      <tr>
+        <th scope="col" rowspan="3" style="height: 120px; width: 50%;">
+            <u>SHIPPER:</u> <br>
+            <p class="fw-normal">{{ i.exporterName }}</p> 
+            <p class="fw-normal">{{ i.exporterAddress }}</p>
+        </th>
+        <th scope="col" style="width: 50%;">
+            BOOKING NO. : {{ i.bookingNum }}
+        </th>
+      </tr>
+      <tr>
+        <th scope="col" style="width: 50%;">
+            SHIPPING LINE : {{ i.shippingLine }}
+        </th>
+      </tr>
+      <tr>
+        <td rowspan="2" style="width: 50%;">
+            {{ i.armAddress }}
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 120px; width: 50%;">
+            <u>CONSIGNEE:</u> <br>
+            <p>{{ i.consignee }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 120px; width: 50%;">
+            <u>NOTIFY & DELIVERY</u> <br>
+            <p>{{ i.notifyDelivery }}</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="height: 120px; padding: 0; padding-bottom: 0; width: 50%;">
+            <table class="table border-white">
+                <tbody>
+                    <tr>
+                        <td style="height: 40px; padding: 0; width: 50%;" class="border border-black">
+                            <u>INITIAL CARRIAGE BY (MODE)</u>
+                            <p>{{ i.initialCarriage_mode }}</p>
+                        </td>
+                        <td style="height: 40px; padding: 0;" class="border border-black">
+                            <u>PLACE OF RECEIPT OF GOODS</u>
+                            <p>{{ i.placeOfReceiptOfGood }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 40px; padding: 0;" class="border border-black">
+                            VESSEL/FLIGHT NO. <br>
+                        </td>
+                        <td style="height: 40px; padding: 0;" class="border border-black">
+                            <u>PORT OF LOADING</u>
+                            <p>{{ i.portOfLoading }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 15px; padding: 0;" class="border border-bottom-0 border-black">
+                            <u>PORT OF DESTINATION</u>
+                            <p>{{ i.portOfDestination }}</p>
+                        </td>
+                        <td style="height: 30px; padding: 0;" class="border border-bottom-0 border-black">
+                            <u>FINAL DESTINATION</u>
+                            <p>{{ i.finalDestination }}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td style="height: 120px;"></td>
+      </tr>
+      <tr>
+        <td style="height: 120px; padding: 0; padding-bottom: 0;" colspan="3">
+            <table class="table border-white">
+                <tbody>
+                    <tr>
+                        <td style="height: 60px; padding: 0;" class="border border-bottom-0 border-black col-3" rowspan="3">
+                            <table class="table border-white">
+                                <tbody>
+                                    <tr>
+                                        <td style="height: 260px; padding: 0;" class="border border-black">
+                                            {% for data in results %}
+                                            <div>
+                                                <center class="border-bottom border-2 border-black">MARKS </center>
+                                                <p>{{ data.marks }}</p>
+                                            </div> <br>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 101px; padding: 0;" class="border border-black">
+                                            <u>CONTAINER NO.</u>
+                                            {% for data in results %}
+                                            <p>{{ data.containerNum }}</p>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 90px; padding: 0;" class="border border-black">
+                                            <u>SHIPPING LINE SEAL#</u>
+                                            {% for data in results %}
+                                            <p>{{ data.shippingLineSeal }}</p>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 90px; padding: 0;" class="border border-black">
+                                            <u>CUSTOM SEAL#</u>
+                                            {% for data in results %}
+                                            <p>{{ data.customSeal }}</p>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0;" class="">
+                                            <u>FREIGHT</u>
+                                            <p>{{ data.freight }}</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td style="height: 40px; padding: 0;" class="border border-bottom-0 border-black col-6" rowspan="3">
+                            <table class="table border-white">
+                                <tbody>
+                                    <tr>
+                                        <td style="height: 350px; padding: 0;" class="border border-black">
+                                            <center class="border-bottom border-2 border-black">DESCRIPTION OF GOODS </center>
+                                            
+                                            <p>{{ data.descriptionOfGood }}</p>
+
+                                            <div>
+                                                {% for data in results %}
+                                                <p>S.B. NO.        : {{ data.shippingBillNo }}</p>
+                                                {% endfor %}
+                                                {% for data in results %}
+                                                <p>IEC NO.         : {{ data.IECno }}</p> 
+                                                {% endfor %}
+                                                <p>IEC NO.         : {{ data.IECno }}</p>
+                                                <p>INVOICE NO.     : {{ data.invoiceNo }}</p>
+                                                <p>HS CODE         : {{ data.hsCode }}</p>
+                                                <p>PO NO           : {{ data.poCode }}</p>
+                                                
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 215px; padding: 0;" class="border border-black">
+                                            <table class="table border border-black">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="border border-black">CONTAINER NO.</td>
+                                                    <td class="border border-black">NO. OF PKG</td>
+                                                    <td class="border border-black">GROSS WT.</td>
+                                                    <td class="border border-black">NET WT.</td>
+                                                </tr>
+                                                {% for data in results %}
+                                                <tr class="border-bottom-0">
+                                                    <td class="border border-black">{{ data.containerNum }}</td>
+                                                    <td class="border border-black">{{ data.noOfPkgs }}</td>
+                                                    <td class="border border-black">{{ data.grossWt }}</td>
+                                                    <td class="border border-black">{{ data.netWt }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                                
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0;" class="">
+                                            DATE OF ISSUE
+                                            <p>{{ data.dateOfIssue }}</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td style="height: 40px; padding: 0;" class="border border-bottom-0 border-black col-3" rowspan="3">
+                            <table class="table border-white">
+                                <tbody>
+                                    <tr>
+                                        <td style="height: 350px; padding: 0;" class="border border-black">
+                                            <center class="border-bottom border-2 border-black">WEIGHT</center>
+                                            <br> <center>
+                                            <div>
+                                                <u>GROSS WT.</u> <br><br>
+                                                {% for data in results %}
+                                                    {{ data.grossWt }} <br>
+                                                {% endfor %}
+                                            </div>
+                                            <div>
+                                                <u>NET WT.</u> <br> <br>
+                                                {% for data in results %}
+                                                    {{ data.netWt }} <br>
+                                                {% endfor %}
+                                            </div> <br><br>
+                                            <div>
+                                                CBM : {{ data.CBM }}
+                                            </div><br><br>
+                                        </center>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 215px; padding: 0;" class="border border-black">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr class="border-bottom-0">
+                                                    <td class="border border-black">CBM</td>
+                                                </tr>
+                                                {% for data in results %}
+                                                <tr class="border-bottom-0">
+                                                    <td class="border border-black">{{ data.CBM }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                                
+                                            </tbody>
+                                                
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 65px; padding: 0;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr> 
+                </tbody>
+            </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

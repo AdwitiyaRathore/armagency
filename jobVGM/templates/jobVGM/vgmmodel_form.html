@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+<br>
+<h5 class="display">VGM Form</h5>
+    <div  style="height: 60vh;">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+
+            <input type="submit" value="Update" class="btn btn-primary pd-10">
+        </form>
+        <br><br><br><br><br>
+    </div>
+ <!-- ------------------------------------------------------------------------------------- -->
+    <script>
+        function copyToClipboard(value) {
+            var tempInput = document.createElement("input");
+            tempInput.style.position = "absolute";
+            tempInput.style.left = "-1000px";
+            tempInput.value = value;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+        }
+        </script>
+
+{% include 'bases/jobVgmBase.html' %}
+
+{% endblock %}

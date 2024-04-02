@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Details of Stuffing Sheet: {{ stuffingSheetDetail.jobNumber }}</h2>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <a href="{% url 'stuffingSheet:stuffingSheetUpdate' pk=stuffingSheetDetail.pk %}"><button class="btn btn-success me-md-2" type="button">Update</button></a>
+</div>
+
+<hr>
+<br>
+
+<!-- showJobDetail -->
+<h4>For Job:</h4>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="width: 20%;" scope="col ">Job Number</th>
+        <th style="width: 20%;" scope="col ">Depot</th>
+        <th style="width: 20%;" scope="col ">Depot Address</th>
+        <th style="width: 20%;" scope="col ">Stuffing Type</th>
+        <th style="width: 20%;" scope="col ">Booking Num</th>
+        <th style="width: 20%;" scope="col ">Invoice No</th>
+        <th style="width: 20%;" scope="col ">Container Num</th>
+        <th style="width: 20%;" scope="col ">Shutout</th>
+        <th style="width: 20%;" scope="col ">Date Of Stuffing</th>
+        <th style="width: 20%;" scope="col ">Shipping Line</th>
+        <th style="width: 20%;" scope="col ">Custom Seal</th>
+        <th style="width: 20%;" scope="col ">Size_20</th>
+        <th style="width: 20%;" scope="col ">Size_40</th>
+        <th style="width: 20%;" scope="col ">Port Of Destination</th>
+        <th style="width: 20%;" scope="col ">Shipping Line Seal</th>
+        <th style="width: 20%;" scope="col ">Port Of Loading</th>
+        <th style="width: 20%;" scope="col ">Exporter Name</th>
+        <th style="width: 20%;" scope="col ">Name Of Good</th>
+        <th style="width: 20%;" scope="col ">No Of Pkgs</th>
+        <th style="width: 20%;" scope="col ">Gross Wt</th>
+        <th style="width: 20%;" scope="col ">Value INR</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>{{ stuffingSheetDetail.jobNumber }}</td>
+          <td>{{ stuffingSheetDetail.depot }}</td>
+          <td>{{ stuffingSheetDetail.depotAddress }}</td>
+          <td>{{ stuffingSheetDetail.stuffingType }}</td>
+          <td>{{ stuffingSheetDetail.bookingNum }}</td>
+          <td>{{ stuffingSheetDetail.invoiceNo }}</td>
+          <td>{{ stuffingSheetDetail.containerNum }}</td>
+          <td>{{ stuffingSheetDetail.shutout }}</td>
+          <td>{{ stuffingSheetDetail.dateOfStuffing }}</td>
+          <td>{{ stuffingSheetDetail.shippingLine }}</td>
+          <td>{{ stuffingSheetDetail.customSeal }}</td>
+
+          {% if stuffingSheetDetail.size_20 == True and stuffingSheetDetail.size_40 == True %}
+            <td>20</td>
+            <td>40</td>
+          {% elif stuffingSheetDetail.size_20 == True and stuffingSheetDetail.size_40 == False %}
+            <td>20</td>
+            <td>0</td>
+          {% elif stuffingSheetDetail.size_20 == False and stuffingSheetDetail.size_40 == True %}
+            <td>0</td>
+            <td>40</td>
+          {% endif %}
+
+          <td>{{ stuffingSheetDetail.portOfDestination}}</td>
+          <td>{{ stuffingSheetDetail.shippingLineSeal}}</td>
+          <td>{{ stuffingSheetDetail.portOfLoading}}</td>
+          <td>{{ stuffingSheetDetail.exporterName}}</td>
+          <td>{{ stuffingSheetDetail.nameOfGood}}</td>
+          <td>{{ stuffingSheetDetail.noOfPkgs}}</td>
+          <td>{{ stuffingSheetDetail.grossWt}}</td>
+          <td>{{ stuffingSheetDetail.valueINR}}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

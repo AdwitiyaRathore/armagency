@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARM Agency</title>
+
+    <!-- JS link -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+</head>
+<body>
+  <div class="container mt-5">
+  <h1 class="text-center">{{ vgmForm3.exporterName }}</h1>
+  <h6 class="text-center">{{ vgmForm3.exporterAddress }}</h6>
+  
+
+<br>
+  <center><h5><head>Verified Gross Mass</head></h5></center>
+
+  <table class="table table-bordered border-dark">
+      <thead>
+          <tr>
+              <th class="col-md-1">Sr no.</th>
+              <th class="col-md-6">Details of Information</th>
+              <th class="col-md-4">Perticulars</th>
+          </tr>
+      </thead>
+      <tbody>
+            <tr>
+              <td class="col-md-1">1</td>
+              <td class="col-md-6">Booking No.</td>
+              <td class="col-md-4">{{ vgmForm3.bookingNum }}</td>
+            </tr>
+            <tr>
+              <td class="col-md-1">2</td>
+              <td class="col-md-6">Name of Shipper</td>
+              <td class="col-md-4">{{ vgmForm3.exporterName }}</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">3</td>
+              <td class="col-md-6">Shipper Registration/License No. (IEC No/CIN No)**</td>
+              <td class="col-md-4">{{ vgmForm3.IEC_no }}</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">4</td>
+              <td class="col-md-6">Name and Designmation of official of the shipper authorised to sign documnet</td>
+              <td class="col-md-4">{{ vgmForm3.NameOfAuthorised }}({{ vgmForm3.DesignationOfAuthorised }})</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">5</td>
+              <td class="col-md-6">24x7 contact details of authorised official of shipper</td>
+              <td class="col-md-4">{{ vgmForm3.contactDetail }}</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">6</td>
+              <td class="col-md-6">Container No.</td>
+              <td class="col-md-4">{{ vgmForm3.containerNum }}</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">7</td>
+              <td class="col-md-6">Container Size(TEU/FEU/other)</td>
+              {% if vgmForm3.size_20 == 20 %}
+                <td class="col-md-4">20</td>
+              {% elif vgmForm3.size_40 == 40%}
+                <td class="col-md-4">20</td>
+              {% elif vgmForm3.size_20 == 20 and vgmForm3.size_40 == 40 %}
+                <td class="col-md-4">20, 40</td>
+              {% endif %}
+            </tr>
+
+            <tr>
+              <td class="col-md-1">8</td>
+              <td class="col-md-6">Maximum permissible weight of Container as per the CSC plate</td>
+              <td class="col-md-4">{{ vgmForm3.permissibleWeight }}</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">9</td>
+              <td class="col-md-6">Weighbridge Registration no. & Address of Weighbridge </td>
+              <td class="col-md-4">{{ vgmForm3.WeighBridgeRegistration }} <br> {{ vgmForm3.WeighBridgeAddress }}</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">10</td>
+              <td class="col-md-6">Weighing Method (Method-1/ Method-2) </td>
+              <td class="col-md-4">Method-1</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">11</td>
+              <td class="col-md-6">Verified gross mass of container</td>
+              <td class="col-md-4">Method-1- {{ vgmForm3.cargoWeight }} '+' {{ vgmForm3.containerWeight }} = {{ vgmForm3.cargoWeight|add:vgmForm3.cargoWeight }}</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">12</td>
+              <td class="col-md-6">Unit of Measure(KG/ MT/ LBS)</td>
+              <td class="col-md-4">{{ vgmForm3.unitOfMeasure }}</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">13</td>
+              <td class="col-md-6">Date and time of weighing</td>
+              <td class="col-md-4">{{ vgmForm3.dateOfWeigh }}, {{ vgmForm3.timeofWeigh }}</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">14</td>
+              <td class="col-md-6">Weightment Slip No.</td>
+              <td class="col-md-4">{{ vgmForm3.weightmentSlipNum }}</td>
+            </tr>
+
+            
+
+            <tr>
+              <td class="col-md-1">15</td>
+              <td class="col-md-6">Type (Normal/Reefer/Hazardous/others)</td>
+              <td class="col-md-4">{{ vgmForm3.typeOF }}</td>
+            </tr>
+
+            <tr>
+              <td class="col-md-1">16</td>
+              <td class="col-md-6">If Hazardous, UN No, IMDG Class</td>
+              <td class="col-md-4">{{ vgmForm3.ifHazardous }}</td>
+            </tr>
+        </tbody>
+  </table>
+  <div align="right">
+    <img src="{{ vgmForm3.signatureImg.url }}" alt="image" height="=10%" width="10%">
+    <p>Signature of the authorised perosn of Shipper</p>
+    Name:  {{ vgmForm3.NameOfAuthorised }}
+    <br>
+    Date:  {{ vgmForm3.todayDate}}
+  </div>
+</div>
+
+</body>
+</html>
+
