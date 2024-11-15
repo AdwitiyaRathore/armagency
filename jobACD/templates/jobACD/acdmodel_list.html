@@ -16,6 +16,8 @@
     <thead>
       <tr>
         <tr>
+            <th style="width: 20%;" scope="col ">Index</th>
+            <th style="width: 20%;" scope="col ">Job Number</th>
             <th style="width: 20%;" scope="col ">Exporter Name</th>
             <th style="width: 20%;" scope="col ">Consignee</th>
             <th style="width: 20%;" scope="col ">Booking No</th>
@@ -26,7 +28,9 @@
     <tbody>
         {% for items in acdList %}
         <tr>
-            <td><a href="{% url 'jobACD:acdDetail' pk=items.pk %}">{{ items.exporterName }}</a></td>
+            <td><a href="{% url 'jobACD:acdDetail' pk=items.pk %}">{{ items.index }}</a></td>
+            <td>{{ items.jobNumber }}</td>
+            <td>{{ items.exporterName }}</td>
             <td>{{ items.consignee }}</td>
             <td>{{ items.bookingNum }}</td>
             <td>{{ items.containerNum }}</td>

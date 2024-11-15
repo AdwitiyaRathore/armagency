@@ -78,15 +78,36 @@
                   <a class="nav-link active me-auto fw-semibold" href="{% url 'accounts:signup' %}">Signup</a>
                 </li>
 
-            {% endif %}      
-                <li>
+            {% endif %}
+                <!-- <li>
                   <a class="nav-link active fw-semibold" aria-current="page" href="{% url 'accounts:logout' %}">Logout</a>
-                </li>  
+                </li> -->
+                <form action="{% url 'logout' %}" method="POST">
+                  {% csrf_token %}
+          
+                  {% if messages %}
+                  {% for message in messages %}
+          
+                  <div class="alert
+                  {% if message.tags == 'error' %} alert-danger
+                  {% elif message.tags == 'success' %} alert-success
+                  {% else %} alert-warning
+                  {% endif %} alert-dismissible fade show"
+                  role="alert">
+                      {{ message }}
+                      <button type="button" class="nav-link active me-auto fw-semibold" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+          
+                  {% endfor %}
+                  {% endif %}
+          
+                  <button type="submit" class="nav-link active me-auto fw-semibold">Logout</button>
+              </form>
 
             {% else %}
                 <li class="nav-item">
-                  <a class="nav-link active fw-semibold" aria-current="page" href="{% url 'accounts:login' %}">login</a></li>           
-                </li> 
+                  <a class="nav-link active fw-semibold" aria-current="page" href="{% url 'accounts:login' %}">Login</a></li>
+                </li>
 
             {% endif %}
           </ul>

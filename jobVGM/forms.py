@@ -1,7 +1,8 @@
-from django.forms import ModelForm
-from django import forms
-from .models import VgmModel
 from dal import autocomplete
+from django import forms
+from django.forms import ModelForm
+
+from .models import VgmModel
 
 
 class BillingForm(ModelForm):
@@ -20,6 +21,8 @@ class BillingForm(ModelForm):
     WeighBridgeAddress = forms.CharField(required=False, label='WeighBridge Address')
     emptyContainerMass = forms.FloatField(required=False, label='Empty Container Mass')
     goodMass = forms.FloatField(required=False, label='Good Mass')
+    dateOfWeigh = forms.DateField(required=False, label='Date of WEigh')
+    timeofWeigh = forms.TimeField(required=False, label='Time of WEigh(Hr:Min)')
     cargoWeight = forms.IntegerField(required=False, label='Cargo Weight')
     containerWeight = forms.IntegerField(required=False, label='Container Weight')
     verifiedGrossMass = forms.FloatField(required=False, label='Verified Gross Mass')
@@ -40,17 +43,17 @@ class BillingForm(ModelForm):
         widgets = {
             'timeofWeigh' : forms.DateInput(attrs={'type':'time'}),
             'dateOfWeigh': forms.DateInput(attrs={'type':'date'}),
-            'exporterAddress': forms.Textarea(attrs={'rows': 5}),   
+            'exporterAddress': forms.Textarea(attrs={'rows': 5}),
             'size_20': forms.CheckboxInput(),
             'size_40': forms.CheckboxInput(),
         }
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['dateOfWeigh'].input_formats = ["%Y-%m-%d"]
-    #     self.fields['dateOfWeigh'].label = 'Date Of Weigh'
-    #     self.fields['timeofWeigh'].input_formats = ["%H-%m"]
-    #     self.fields['timeofWeigh'].label = 'Time of Weigh'
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['dateOfWeigh'].input_formats = ["%Y-%m-%d"]
+        self.fields['dateOfWeigh'].label = 'Date Of Weigh'
+        self.fields['timeofWeigh'].input_formats = ["%H-%m"]
+        self.fields['timeofWeigh'].label = 'Time of Weigh'
 
     def __init__(self, *args, **kwargs):
         super(BillingForm, self).__init__(*args, **kwargs)
@@ -74,5 +77,6 @@ class BillingForm(ModelForm):
         ]
 
         for field in fields_to_uppercase:
+            value = cleaned_data.get(field)
             if field is not None:
-                cleaned_data[field] = cleaned_data.get(field, '').upper()    
+                cleaned_data[field] = str(value).upper()

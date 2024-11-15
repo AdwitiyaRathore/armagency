@@ -1,26 +1,12 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
-from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
 from django.db.models import Q
-from dal import autocomplete
-from django.http import JsonResponse
-from django.views import View
-
-from jobData.forms import NewData
-from jobData.models import DataOfJob
-
-from jobVGM.models import VgmModel 
-from jobVGM.forms import BillingForm
-
-from jobBOL.forms import BolForm
-from jobBOL.models import BolModel
-
+from django.shortcuts import HttpResponse, get_object_or_404, render
+from django.urls import reverse_lazy
+from django.views import generic
 from jobACD.forms import AcdForm
-from jobACD.models import AcdModel 
-
-from stuffingSheet.forms import StuffingSheetForm
+from jobACD.models import AcdModel
 from stuffingSheet.models import StuffingSheetModel
+
 # Create your views here.
 
 ## Class Based Views....
@@ -44,9 +30,13 @@ class ACDformUpdate(LoginRequiredMixin, generic.UpdateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
+        data_of_job_instance = self.object.index
 
-        stuffingSheet_instance = StuffingSheetModel.objects.create(
-            customSeal = self.object.customSeal,
+        StuffingSheetModel.objects.update_or_create(
+            index=data_of_job_instance,
+            defaults={
+                'customSeal' : self.object.customSeal,
+            }
         )
 
         return response
@@ -60,14 +50,7 @@ class ACDformUpdate(LoginRequiredMixin, generic.UpdateView):
         context['unique_shippingBillNo'] = AcdModel.objects.values_list('shippingBillNo', flat=True).distinct()
         context['unique_customSeal'] = AcdModel.objects.values_list('customSeal', flat=True).distinct()
 
-        return context 
-    
-    def form_valid(self, form):
-
-        response = super().form_valid(form)
-        obj = form.instance
-
-        return response
+        return context
 
 class AcdTemplate(LoginRequiredMixin, generic.DetailView):
     model = AcdModel
@@ -79,7 +62,7 @@ class AcdTemplate(LoginRequiredMixin, generic.DetailView):
         return AcdModel.objects.filter(pk=self.kwargs['pk'])
 
 def search_view(request):
-    query = request.GET.get('search', '') 
+    query = request.GET.get('search', '')
     
     search_fields = [
     'exporterName',

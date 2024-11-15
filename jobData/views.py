@@ -1,32 +1,28 @@
+from datetime import date, datetime
 from typing import Any
-from django.db.models.query import QuerySet
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse, reverse_lazy
-from django.views.generic import (DetailView, CreateView, ListView, UpdateView, DeleteView, TemplateView)
-from django.db.models import Q
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q, Sum
+from django.db.models.query import QuerySet
 from django.http import Http404
-from datetime import datetime
-from django.db.models import Sum
-
-
-from jobData.forms import NewData
-from jobData.models import DataOfJob
-
-from jobVGM.models import VgmModel 
-from jobVGM.forms import BillingForm
-
-from jobBOL.forms import BolForm
-from jobBOL.models import BolModel
-
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse, reverse_lazy
+from django.utils import timezone
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
 from jobACD.forms import AcdForm
 from jobACD.models import AcdModel
-
+from jobBOL.forms import BolForm
+from jobBOL.models import BolModel
+from jobData.forms import NewData
+from jobData.models import DataOfJob
+from jobOther.forms import OtherForm
+from jobOther.models import OtherModel
+from jobVGM.forms import BillingForm
+from jobVGM.models import VgmModel
 from stuffingSheet.forms import StuffingSheetForm
 from stuffingSheet.models import StuffingSheetModel
 
-from jobOther.forms import OtherForm
-from jobOther.models import OtherModel
 # Create your views here.
 
 ## Class Based Views....
@@ -42,58 +38,79 @@ class CreateJobView(LoginRequiredMixin, CreateView):
     form_class = NewData
 
     def form_valid(self, form):
-        response = super().form_valid(form)
+        # Get the number of bookings from the form
+        num_bookings = form.cleaned_data.get('noOfBooking')
 
-        if self.object.tues_1 == 1 and self.object.tues_2 == 2:
-            size_20 = True
-            size_40 = True 
-        elif self.object.tues_1 == 1:
-            size_20 = True
-            size_40 = False
-        elif self.object.tues_2 == 2:
-            size_20 = False
-            size_40 = True
-        else:
-            size_20 = True
-            size_40 = True
+        # Retrieve the data for each booking
+        original_job_data = {
+            'jobNumber': form.cleaned_data.get('jobNumber'),
+            'noOfBooking': 1,  # Set to 1 because this will be individual booking now
+            'container_no': form.cleaned_data.get('container_no'),
+            'shippingLine': form.cleaned_data.get('shippingLine'),
+            'Forwarder': form.cleaned_data.get('Forwarder'),
+            'bookingNum': form.cleaned_data.get('bookingNum'),
+            'exporterName': form.cleaned_data.get('exporterName'),
+            'exporterAddress': form.cleaned_data.get('exporterAddress'),
+            'size_20': form.cleaned_data.get('size_20'),
+            'size_40': form.cleaned_data.get('size_40'),
+            'todayDate': form.cleaned_data.get('todayDate', timezone.now().date()),
+        }
 
-        
+        for _ in range(num_bookings):
+            # Create a new instance with the same data but a new primary key
+            self.object = DataOfJob(**original_job_data)
+            self.object.pk = None  # This creates a new instance with a new primary key
+            self.object.save()  # Save the new instance
 
-        vgm_instance = VgmModel.objects.create(
-            exporterName = self.object.exporterName,
-            exporterAddress = self.object.exporterAddress,
-            size_20 = size_20,
-            size_40 = size_40,
-            bookingNum = self.object.bookingNum,
-        )
-        
-        bol_instance = BolModel.objects.create(
-            shippingLine = self.object.shippingLine,
-            bookingNum = self.object.bookingNum,
-            exporterName = self.object.exporterName, 
-            exporterAddress = self.object.exporterAddress,
-        )
+            # Define size_20 and size_40 based on the tues_1 and tues_2 values
+            size_20 = self.object.size_20
+            size_40 = self.object.size_40
 
-        acd_instance = AcdModel.objects.create(
-            bookingNum = self.object.bookingNum,
-            exporterName = self.object.exporterName, 
-            exporterAddress = self.object.exporterAddress,
-        )
+            # Create instances for related models
+            VgmModel.objects.create(
+                jobNumber = self.object.jobNumber,
+                containerNum = self.object.container_no,
+                exporterName=self.object.exporterName,
+                exporterAddress=self.object.exporterAddress,
+                size_20=size_20,
+                size_40=size_40,
+                bookingNum=self.object.bookingNum,
+            )
 
-        stuffingSheet_instance = StuffingSheetModel.objects.create(
-            bookingNum = self.object.bookingNum,
-            exporterName = self.object.exporterName, 
-            shippingLine = self.object.shippingLine,
-            size_20 = size_20,
-            size_40 = size_40,
-        )
+            BolModel.objects.create(
+                jobNumber = self.object.jobNumber,
+                containerNum = self.object.container_no,
+                shippingLine=self.object.shippingLine,
+                bookingNum=self.object.bookingNum,
+                exporterName=self.object.exporterName,
+                exporterAddress=self.object.exporterAddress,
+            )
 
-        otherJob_instance = OtherModel.objects.create(
-            bookingNum = self.object.bookingNum,
-        )
-        
+            AcdModel.objects.create(
+                jobNumber = self.object.jobNumber,
+                containerNum = self.object.container_no,
+                bookingNum=self.object.bookingNum,
+                exporterName=self.object.exporterName,
+                exporterAddress=self.object.exporterAddress,
+            )
+
+            StuffingSheetModel.objects.create(
+                jobNumber = self.object.jobNumber,
+                containerNum = self.object.container_no,
+                bookingNum=self.object.bookingNum,
+                exporterName=self.object.exporterName,
+                shippingLine=self.object.shippingLine,
+                size_20=size_20,
+                size_40=size_40,
+            )
+
+            OtherModel.objects.create(
+                jobNumber = self.object.jobNumber,
+                containerNum = self.object.container_no,
+                bookingNum=self.object.bookingNum,
+            )
+
         return super().form_valid(form)
-        # return response
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -118,6 +135,52 @@ class JobUpdateView(LoginRequiredMixin, UpdateView):
     form_class = NewData
     login_url = '/login/'
     redirect_field_name = 'jobData/dataofjob_detail.html'
+
+    # def form_valid(self, form):
+    #     response = super().form_valid(form)
+    #     size_20 = self.object.size_20
+    #     size_40 = self.object.size_40
+
+    #     # Create instances for related models
+    #     VgmModel.objects.create(
+    #         jobNumber = self.object.jobNumber,
+    #         exporterName=self.object.exporterName,
+    #         exporterAddress=self.object.exporterAddress,
+    #         size_20=size_20,
+    #         size_40=size_40,
+    #         bookingNum=self.object.bookingNum,
+    #     )
+
+    #     BolModel.objects.create(
+    #         jobNumber = self.object.jobNumber,
+    #         shippingLine=self.object.shippingLine,
+    #         bookingNum=self.object.bookingNum,
+    #         exporterName=self.object.exporterName,
+    #         exporterAddress=self.object.exporterAddress,
+    #     )
+
+    #     AcdModel.objects.create(
+    #         jobNumber = self.object.jobNumber,
+    #         bookingNum=self.object.bookingNum,
+    #         exporterName=self.object.exporterName,
+    #         exporterAddress=self.object.exporterAddress,
+    #     )
+
+    #     StuffingSheetModel.objects.create(
+    #         jobNumber = self.object.jobNumber,
+    #         bookingNum=self.object.bookingNum,
+    #         exporterName=self.object.exporterName,
+    #         shippingLine=self.object.shippingLine,
+    #         size_20=size_20,
+    #         size_40=size_40,
+    #     )
+
+    #     OtherModel.objects.create(
+    #         jobNumber = self.object.jobNumber,
+    #         bookingNum=self.object.bookingNum,
+    #     )
+
+    #     return response
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

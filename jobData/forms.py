@@ -1,11 +1,13 @@
-from . import models
 from django import forms
 from django.forms import ModelForm
+
+from . import models
+
 
 class NewData(ModelForm):
 
     jobNumber = forms.CharField(label='Job Number')
-    # noOfBooking = forms.IntegerField(label='No Of Booking')
+    noOfBooking = forms.IntegerField(label='No Of Booking')
     shippingLine = forms.CharField(label='Shipping Line')
     Forwarder = forms.CharField(label='Forwarder')
     bookingNum = forms.CharField(label='Booking No')

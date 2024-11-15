@@ -21,6 +21,8 @@
 <table class="table table-striped">
     <thead>
       <tr>
+        <th style="width: 20%;" scope="col">Index</th>
+        <th style="width: 20%;" scope="col">Job Number</th>
         <th style="width: 20%;" scope="col">Exporter Name</th>
         <th style="width: 20%;" scope="col">Depot</th>
         <th style="width: 20%;" scope="col">Booking Num</th>
@@ -33,7 +35,9 @@
     <tbody>
         {% for items in stuffingSheetList %}
             <tr>
-                <td><a href="{% url 'stuffingSheet:stuffingSheetDetail' pk=items.pk %}" class="link-opacity-25-hover">{{ items.exporterName }}</a></td>
+                <td><a href="{% url 'stuffingSheet:stuffingSheetDetail' pk=items.pk %}" class="link-opacity-25-hover">{{ items.index }}</a></td>
+                <td>{{ items.jobNumber }}</td>
+                <td>{{ items.exporterName }}</td>
                 <td>{{ items.depot }}</td>
                 <td>{{ items.bookingNum }}</td>
                 <td>{{ items.containerNum }}</td>

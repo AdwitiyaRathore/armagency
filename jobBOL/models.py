@@ -1,12 +1,13 @@
 from django.db import models
-from jobData.models import DataOfJob
 from django.urls import reverse
+from jobData.models import DataOfJob
 
 # Create your models here.
 
 class BolModel(models.Model):
 
-    jobNumber = models.OneToOneField(DataOfJob, primary_key=True, on_delete=models.CASCADE)
+    index = models.ForeignKey(DataOfJob, on_delete=models.CASCADE, primary_key=True)
+    jobNumber = models.IntegerField(blank=True, null=True)
     exporterName = models.CharField(blank=True, null=True, max_length=255)
     exporterAddress = models.CharField(max_length=255, blank=True)
     gstin = models.CharField(blank=True, null=True, max_length=255)
@@ -39,7 +40,7 @@ class BolModel(models.Model):
     dateOfIssue = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return self.exporterName
+        return str(self.index)
 
     def get_absolute_url(self):
         return reverse('jobBOL:bolDetail', kwargs={'pk': self.pk})

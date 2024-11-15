@@ -1,5 +1,6 @@
-from django.forms import ModelForm
 from django import forms
+from django.forms import ModelForm
+
 from .models import StuffingSheetModel, TotalStuffingValue
 
 
@@ -33,26 +34,41 @@ class StuffingSheetForm(ModelForm):
             'size_40': forms.CheckboxInput(),
         }
     
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['dateOfStuffing'].input_formats = ["%Y-%m-%d"]
-    #     self.fields['dateOfStuffing'].label = 'Date Of Stuffing'
-    #     self.fields['shippingBillDate'].input_formats = ["%Y-%m-%d"]
-    #     self.fields['shippingBillDate'].label = 'Shipping Bill Date'
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['dateOfStuffing'].input_formats = ["%Y-%m-%d"]
+        self.fields['dateOfStuffing'].label = 'Date Of Stuffing'
+        self.fields['shippingBillDate'].input_formats = ["%Y-%m-%d"]
+        self.fields['shippingBillDate'].label = 'Shipping Bill Date'
 
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        fields_to_uppercase = [
+        'depot', 'depotAddress', 'stuffingType', 'bookingNum', 'invoiceNo',
+        'containerNum', 'shippingLine', 'portOfDestination', 'shippingLineSeal',
+        'portOfLoading', 'exporterName', 'nameOfGood'
+        ]
+
+        for field in fields_to_uppercase:
+            value = cleaned_data.get(field)
+            if value:
+                cleaned_data[field] = str(value).upper()
 
 class TotalStuffing(ModelForm):
     class Meta:
         model = TotalStuffingValue
         exclude = ['bookingNum', 'totalPkg', 'totalGrossWt', 'totalvalueINR']
     
-    # def clean(self):
-    #     cleaned_data = super().clean()
+    def clean(self):
+        cleaned_data = super().clean()
 
-    #     fields_to_uppercase = [
-    #     'bookingNum', 'totalPkg', 'totalGrossWt', 'totalvalueINR'
-    #     ]
+        fields_to_uppercase = [
+        'bookingNum', 'totalPkg', 'totalGrossWt', 'totalvalueINR'
+        ]
 
-    #     for field in fields_to_uppercase:
-    #         if field is not None:
-    #             cleaned_data[field] = cleaned_data.get(field, '').upper()
+        for field in fields_to_uppercase:
+            value = cleaned_data.get(field)
+            if value:
+                cleaned_data[field] = str(value).upper()

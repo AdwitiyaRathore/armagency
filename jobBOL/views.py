@@ -1,26 +1,14 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
-from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
 from django.db.models import Q
-from dal import autocomplete
-from django.http import JsonResponse
-from django.views import View
-
-from jobData.forms import NewData
-from jobData.models import DataOfJob
-
-from jobVGM.models import VgmModel 
-from jobVGM.forms import BillingForm
-
+from django.shortcuts import HttpResponse, get_object_or_404, render
+from django.urls import reverse_lazy
+from django.views import generic
+from jobACD.models import AcdModel
 from jobBOL.forms import BolForm
 from jobBOL.models import BolModel
-
-from jobACD.forms import AcdForm
-from jobACD.models import AcdModel
-
-from stuffingSheet.forms import StuffingSheetForm
+from jobOther.models import OtherModel
 from stuffingSheet.models import StuffingSheetModel
+
 # Create your views here.
 
 ## Class Based Views....
@@ -45,25 +33,55 @@ class BOLformUpdate(LoginRequiredMixin, generic.UpdateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
+        data_of_job_instance = self.object.index
 
-        acd_instance = AcdModel.objects.create(
-            consignee = self.object.consignee,
-            placeOfReceiptOfGood = self.object.placeOfReceiptOfGood,
-            portOfLoading = self.object.portOfLoading,
-            grossWt = self.object.grossWt,
-            noOfPkgs = self.object.noOfPkgs,
-            shippingBillNo = self.object.shippingBillNo,
-            marks = self.object.marks,
+        AcdModel.objects.update_or_create(
+            index=data_of_job_instance,
+            default = {
+                'jobNumber': self.object.jobNumber,
+                'exporterName': self.object.exporterName,
+                'consignee': self.object.consignee,
+                'bookingNum': self.object.bookingNum,
+                'placeOfReceiptOfGood': self.object.placeOfReceiptOfGood,
+                'vesselName': self.object.vesselName,
+                'portOfLoading': self.object.portOfLoading,
+                'portOfDischarge': self.object.portOfDischarge,
+                'exporterAddress': self.object.exporterAddress,
+                'grossWt' : self.object.grossWt,
+                'noOfPkgs' : self.object.noOfPkgs,
+                'shippingBillNo' : self.object.shippingBillNo,
+                'marks' : self.object.marks,
+                'noOfPkgs': self.object.noOfPkgs,
+                'shippingBillNo': self.object.shippingBillNo,
+                'containerNum': self.object.containerNum,
+            }
         )
 
-        stuffingSheet_instance = StuffingSheetModel.objects.create(
-            invoiceNo = self.object.invoiceNo,
-            shippingLine = self.object.shippingLine, 
-            portOfLoading = self.object.portOfLoading,
-            portOfDestination = self.object.portOfDestination,
-            shippingLineSeal = self.object.shippingLineSeal,
-            noOfPkgs = self.object.noOfPkgs,
-            grossWt = self.object.grossWt,
+        StuffingSheetModel.objects.update_or_create(
+            index=data_of_job_instance,
+            defaults={
+                'jobNumber': self.object.jobNumber,
+                'bookingNum': self.object.bookingNum,
+                'exporterName': self.object.exporterName,
+                'invoiceNo' : self.object.invoiceNo,
+                'shippingLine' : self.object.shippingLine,
+                'portOfLoading' : self.object.portOfLoading,
+                'portOfDestination' : self.object.portOfDestination,
+                'shippingLineSeal' : self.object.shippingLineSeal,
+                'noOfPkgs' : self.object.noOfPkgs,
+                'grossWt' : self.object.grossWt,
+                'shippingBillNo': self.object.shippingBillNo,
+                'containerNum': self.object.containerNum,
+                'customSeal': self.object.customSeal,
+            }
+        )
+        OtherModel.objects.update_or_create(
+            index=data_of_job_instance,
+            defaults={
+                'jobNumber': self.object.jobNumber,
+                'bookingNum': self.object.bookingNum,
+                'containerNum': self.object.containerNum,
+            }
         )
 
         return response
@@ -77,18 +95,11 @@ class BOLformUpdate(LoginRequiredMixin, generic.UpdateView):
         context['unique_descriptionOfGood'] = BolModel.objects.values_list('descriptionOfGood', flat=True).distinct()
         context['unique_customSeal'] = BolModel.objects.values_list('customSeal', flat=True).distinct()
 
-        return context 
-    
-    def form_valid(self, form):
-
-        response = super().form_valid(form)
-        obj = form.instance
-
-        return response
+        return context
 
 
 def bol_template(request):
-    query = request.GET.get('bookingNum', '') 
+    query = request.GET.get('bookingNum', '')
     
     search_fields = [
     'bookingNum',

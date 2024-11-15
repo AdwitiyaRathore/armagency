@@ -68,12 +68,14 @@
             <tr>
               <td class="col-md-1">7</td>
               <td class="col-md-6">Container Size(TEU/FEU/other)</td>
-              {% if vgmForm3.size_20 == 20 %}
-                <td class="col-md-4">20</td>
-              {% elif vgmForm3.size_40 == 40%}
-                <td class="col-md-4">20</td>
-              {% elif vgmForm3.size_20 == 20 and vgmForm3.size_40 == 40 %}
+              {% if vgmForm1.size_20 and vgmForm1.size_40 %}
                 <td class="col-md-4">20, 40</td>
+
+              {% elif vgmForm1.size_20 %}
+                <td class="col-md-4">20</td>
+
+              {% elif vgmForm1.size_40 %}
+                <td class="col-md-4">40</td>              
               {% endif %}
             </tr>
 
@@ -98,7 +100,7 @@
             <tr>
               <td class="col-md-1">11</td>
               <td class="col-md-6">Verified gross mass of container</td>
-              <td class="col-md-4">Method-1- {{ vgmForm3.cargoWeight }} '+' {{ vgmForm3.containerWeight }} = {{ vgmForm3.cargoWeight|add:vgmForm3.cargoWeight }}</td>
+              <td class="col-md-4">Method-1- {{ vgmForm3.cargoWeight }} '+' {{ vgmForm3.containerTireWeight }} = {{ vgmForm3.verifiedGrossMass }} {{ vgmForm1.unitOfMeasure }}</td>
             </tr>
 
             <tr>
@@ -135,11 +137,11 @@
         </tbody>
   </table>
   <div align="right">
-    <img src="{{ vgmForm3.signatureImg.url }}" alt="image" height="=10%" width="10%">
+    <img src="{{ vgmForm3.signatureImg.url }}" alt="image" height="=15%" width="15%">
     <p>Signature of the authorised perosn of Shipper</p>
     Name:  {{ vgmForm3.NameOfAuthorised }}
     <br>
-    Date:  {{ vgmForm3.todayDate}}
+    Date:  {{ vgmForm3.todayDate|date:"d-m-Y"}}
   </div>
 </div>
 

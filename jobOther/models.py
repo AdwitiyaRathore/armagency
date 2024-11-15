@@ -1,6 +1,7 @@
 from django.db import models
-from jobData.models import DataOfJob
 from django.urls import reverse
+from jobData.models import DataOfJob
+
 
 # Create your models here.
 class OtherModel(models.Model):
@@ -10,7 +11,8 @@ class OtherModel(models.Model):
         ('2', 'Method-2'),
     ]
 
-    jobNumber = models.OneToOneField(DataOfJob, primary_key=True, on_delete=models.CASCADE)
+    index = models.ForeignKey(DataOfJob, on_delete=models.CASCADE, primary_key=True)
+    jobNumber = models.IntegerField(blank=True, null=True)
     bookingNum = models.CharField(default='', blank=True, null=True, max_length=255)
     containerNum = models.CharField(max_length=255, blank=True)
     doExpityDate = models.DateField(blank=True, null=True)
@@ -25,7 +27,7 @@ class OtherModel(models.Model):
     seaPortInDate = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return self.bookingNum
+        return str(self.index)
     
     def get_absolute_url(self):
         return reverse('jobOther:jobOtherList')

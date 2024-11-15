@@ -1,29 +1,14 @@
-from django.shortcuts import render, HttpResponse
-from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
 from django.db.models import Q
-from dal import autocomplete
-from django.http import JsonResponse
-from django.views import View
-
-from jobData.forms import NewData
-from jobData.models import DataOfJob
-
-from jobVGM.models import VgmModel 
-from jobVGM.forms import BillingForm
-
-from jobBOL.forms import BolForm
-from jobBOL.models import BolModel
-
-from jobACD.forms import AcdForm
+from django.shortcuts import HttpResponse, render
+from django.urls import reverse_lazy
+from django.views import generic
 from jobACD.models import AcdModel
-
-from stuffingSheet.forms import StuffingSheetForm
-from stuffingSheet.models import StuffingSheetModel
-
-from jobOther.forms import OtherForm
+from jobBOL.models import BolModel
 from jobOther.models import OtherModel
+from jobVGM.forms import BillingForm
+from jobVGM.models import VgmModel
+from stuffingSheet.models import StuffingSheetModel
 
 # Create your views here.
 
@@ -48,27 +33,57 @@ class VGMformUpdate(LoginRequiredMixin, generic.UpdateView):
     redirect_field_name = 'jobVGM/vgmmodel_detail.html'
 
     def form_valid(self, form):
-        response = super().form_valid(form)
+        response = super().form_valid(form)  # Save the VgmModel instance
 
-        
-        bol_instance = BolModel.objects.create(
-            containerNum = self.object.containerNum,
-            vesselName = self.object.vesselName,
+        # Get the related DataOfJob instance using the foreign key 'index'
+        data_of_job_instance = self.object.index  # Assuming 'data_of_job' is the foreign key field in VgmModel
+
+        # Update related models using 'index' from DataOfJob
+        BolModel.objects.update_or_create(
+            index=data_of_job_instance,  # Assuming BolModel has a foreign key to DataOfJob
+            defaults={
+                'jobNumber' : self.object.jobNumber,
+                'exporterName': self.object.exporterName,
+                'exporterAddress': self.object.exporterAddress,
+                'IECno': self.object.IEC_no,
+                'bookingNum': self.object.bookingNum,
+                'containerNum': self.object.containerNum,
+                'vesselName': self.object.vesselName,
+            }
         )
 
-        acd_instance = AcdModel.objects.create(
-            containerNum = self.object.containerNum,
-            vesselName = self.object.vesselName,
-            NameOfAuthorised = self.object.NameOfAuthorised,
-            signatureImg = self.object.signatureImg,
+        AcdModel.objects.update_or_create(
+            index=data_of_job_instance,
+            defaults={
+                'jobNumber' : self.object.jobNumber,
+                'exporterName': self.object.exporterName,
+                'exporterAddress': self.object.exporterAddress,
+                'containerNum' : self.object.containerNum,
+                'vesselName' : self.object.vesselName,
+                'NameOfAuthorised' : self.object.NameOfAuthorised,
+                'signatureImg' : self.object.signatureImg,
+            }
         )
 
-        stuffingSheet_instance = StuffingSheetModel.objects.create(
-            bookingNum = self.object.containerNum,
+        StuffingSheetModel.objects.update_or_create(
+            index=data_of_job_instance,
+            defaults={
+                'jobNumber' : self.object.jobNumber,
+                'exporterName': self.object.exporterName,
+                'bookingNum' : self.object.containerNum,
+                'containerNum' : self.object.containerNum,
+                'size_20': self.object.size_20,
+                'size_40': self.object.size_40,
+            }
         )
 
-        otherJob_instance = OtherModel.objects.create(
-            containerNum = self.object.containerNum,
+        OtherModel.objects.update_or_create(
+            index=data_of_job_instance,
+            defaults={
+                'jobNumber' : self.object.jobNumber,
+                'containerNum' : self.object.containerNum,
+                'bookingNum' : self.object.containerNum,
+            }
         )
 
         return response
@@ -85,17 +100,9 @@ class VGMformUpdate(LoginRequiredMixin, generic.UpdateView):
         context['unique_bookingNum'] = VgmModel.objects.values_list('bookingNum', flat=True).distinct()
 
         return context
-
-    def form_valid(self, form):
-
-        response = super().form_valid(form)
-        obj = form.instance
-
-        return response
     
 #__________________________________________________________________________________
 ## Different VGM forms using Class Based Views....
-     
 # For Hapag, Cosco, ....HMM.
 class VgmForm1Detail(LoginRequiredMixin, generic.DetailView):
     model = VgmModel

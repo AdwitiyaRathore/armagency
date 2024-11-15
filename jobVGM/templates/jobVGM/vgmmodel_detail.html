@@ -29,8 +29,6 @@
         <th style="width: 20%;" scope="col ">Permissible Weight</th>
         <th style="width: 20%;" scope="col ">Weigh Bridge Registration</th>
         <th style="width: 20%;" scope="col ">Weigh Bridge Address</th>
-        <th style="width: 20%;" scope="col ">Empty Container Mass</th>
-        <th style="width: 20%;" scope="col ">Good Mass</th>
         <th style="width: 20%;" scope="col ">Cargo Weight</th>
         <th style="width: 20%;" scope="col ">Container Weight</th>
         <th style="width: 20%;" scope="col ">Verified Gross Mass</th>
@@ -63,10 +61,8 @@
           <td>{{ vgmFormDetail.permissibleWeight}}</td>
           <td>{{ vgmFormDetail.WeighBridgeRegistration}}</td>
           <td>{{ vgmFormDetail.WeighBridgeAddress}}</td>
-          <td>{{ vgmFormDetail.emptyContainerMass}}</td>
-          <td>{{ vgmFormDetail.goodMass}}</td>
           <td>{{ vgmFormDetail.cargoWeight}}</td>
-          <td>{{ vgmFormDetail.containerWeight}}</td>
+          <td>{{ vgmFormDetail.containerTireWeight}}</td>
           <td>{{ vgmFormDetail.verifiedGrossMass}}</td>
 
 
@@ -75,7 +71,7 @@
           {% else %}
             <td><img src="#" alt="image" height="=20%" width="20%" class="img-thumbnail"></td>
           {% endif %}
-          <td>{{ vgmFormDetail.todayDate }}</td>
+          <td>{{ vgmFormDetail.todayDate|date:"d-m-Y" }}</td>
         </tr>
     </tbody>
 </table>

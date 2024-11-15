@@ -1,33 +1,11 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
-from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
 from django.db.models import Q
-from dal import autocomplete
-from django.http import JsonResponse
-from django.views import View
-from django.db.models import Sum
-
-
-## App imports...
-
-from jobData.forms import NewData
-from jobData.models import DataOfJob
-
-from jobVGM.models import VgmModel 
-from jobVGM.forms import BillingForm
-
-from jobBOL.forms import BolForm
-from jobBOL.models import BolModel
-
-from jobACD.forms import AcdForm
-from jobACD.models import AcdModel
-
-from stuffingSheet.forms import StuffingSheetForm
-from stuffingSheet.models import StuffingSheetModel, TotalStuffingValue
-
+from django.shortcuts import HttpResponse, get_object_or_404, render
+from django.urls import reverse_lazy
+from django.views import generic
 from jobOther.forms import OtherForm
 from jobOther.models import OtherModel
+from stuffingSheet.models import StuffingSheetModel
 
 # Create your views here.
 
@@ -57,13 +35,13 @@ class JobOtherUpdate(LoginRequiredMixin, generic.UpdateView):
         context['unique_ChaName'] = OtherModel.objects.values_list('ChaName', flat=True).distinct()
         context['unique_bookingNum'] = OtherModel.objects.values_list('bookingNum', flat=True).distinct()
 
-        return context 
+        return context
 
 
 ## Function Based Views........................
 
 def search_view(request):
-    query = request.GET.get('search', '') 
+    query = request.GET.get('search', '')
     
     search_fields = [
     'containerNum',

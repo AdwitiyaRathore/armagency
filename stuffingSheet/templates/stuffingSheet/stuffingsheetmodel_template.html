@@ -83,7 +83,7 @@
                 <tr>
                     <td class="col-md-4 border border-0" style="width: 25%;">Date Of Stuffing: </td>
 
-                    <td class="col-md-4 border-bottom" style="width: 25%;">{{ i.dateOfStuffing }}</td>
+                    <td class="col-md-4 border-bottom" style="width: 25%;">{{ i.dateOfStuffing|date:"d-m-Y" }}</td>
                     <td class="col-md-4 border border-0" style="width: 25%;">Destination: </td>
                     
                     <td class="col-md-4 border-bottom" style="width: 25%;">{{ i.portOfDestination }}</td>
@@ -154,7 +154,7 @@
                                         <td class="col-md-4 border-bottom border-dark">{{ data.shippingBillNo }}</td>
                                     </tr>
                                     <tr>
-                                        <td>{{ data.shippingBillDate }}</td>
+                                        <td>{{ data.shippingBillDate|date:"d-m-Y" }}</td>
                                     </tr>
                                 </tbody>
                             </table>

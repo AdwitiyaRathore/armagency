@@ -1,12 +1,16 @@
+from datetime import date
+
 from django.db import models
 from django.urls import reverse
-from datetime import date
+
 # Create your models here.
     
 class DataOfJob(models.Model):
-    
-    jobNumber = models.IntegerField(primary_key=True)
+
+    index = models.IntegerField(primary_key=True)
+    jobNumber = models.IntegerField()
     noOfBooking = models.IntegerField(default=1)
+    container_no = models.CharField(max_length=255)
     shippingLine = models.CharField(max_length=255)
     Forwarder = models.CharField(max_length=255)
     bookingNum = models.CharField(max_length=255)
@@ -21,7 +25,6 @@ class DataOfJob(models.Model):
     todayDate = models.DateField(default=date.today)
     
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
 
         self.tues_1 = 0
         self.tues_2 = 0
@@ -42,4 +45,4 @@ class DataOfJob(models.Model):
         return reverse("jobData:jobList")
     
     def __str__(self):
-        return self.exporterName
+        return str(self.index)

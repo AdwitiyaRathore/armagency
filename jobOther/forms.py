@@ -1,6 +1,8 @@
-from django.forms import ModelForm
-from .models import OtherModel
 from django import forms
+from django.forms import ModelForm
+
+from .models import OtherModel
+
 
 class OtherForm(ModelForm):
     
@@ -56,5 +58,6 @@ class OtherForm(ModelForm):
         fields_to_uppercase = [ 'jobNumber', 'bookingNum', 'containerMethodType', 'PanNo', 'ChaName']
 
         for field in fields_to_uppercase:
-            if field is not None:
-                cleaned_data[field] = cleaned_data.get(field, '').upper()
+            value = cleaned_data.get(field)
+            if value:
+                cleaned_data[field] = str(value).upper()

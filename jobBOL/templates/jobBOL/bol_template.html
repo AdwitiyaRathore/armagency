@@ -26,22 +26,31 @@
       </tr>
       <tr>
         <td rowspan="2" style="width: 50%;">
-            {{ i.armAddress }}
+            <h3>A.R.M. CONTAINER AGENCY</h3>
+            {{ i.armAddress }} 
         </td>
       </tr>
       <tr>
         <td style="height: 120px; width: 50%;">
-            <u>CONSIGNEE:</u> <br>
+            <u><b>CONSIGNEE:</b></u> <br>
             <p>{{ i.consignee }}</p>
         </td>
       </tr>
       <tr>
         <td style="height: 120px; width: 50%;">
-            <u>NOTIFY & DELIVERY</u> <br>
+            <u><b>NOTIFY & DELIVERY</b></u> <br>
+            <b><p>{{ i.notifyconsignee }}</p></b>
             <p>{{ i.notifyDelivery }}</p>
         </td>
-        <td></td>
-      </tr>
+        {% if i.alsoNotifyParty %}
+            <td>
+                <u><b>ALSO NOTIFY PARTY</b></u>
+                <p>{{ i.alsoNotifyParty }}</p>
+            </td>
+        {% else %}
+            <td></td>
+        {% endif %}
+        </tr>
       <tr>
         <td style="height: 120px; padding: 0; padding-bottom: 0; width: 50%;">
             <table class="table border-white">
@@ -93,9 +102,10 @@
                                             {% for data in results %}
                                             <div>
                                                 <center class="border-bottom border-2 border-black">MARKS </center>
-                                                <p>{{ data.marks }}</p>
+                                                <center><p>{{ data.marks }}</p></center>
                                             </div> <br>
                                             {% endfor %}
+                                            <center>{{ i.pkgorcases }}</center>
                                         </td>
                                     </tr>
                                     <tr>
@@ -124,8 +134,8 @@
                                     </tr>
                                     <tr>
                                         <td style="padding: 0;" class="">
-                                            <u>FREIGHT</u>
-                                            <p>{{ data.freight }}</p>
+                                            <u><b>FREIGHT</b></u>
+                                            <p>{{ i.freight }}</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -135,23 +145,31 @@
                             <table class="table border-white">
                                 <tbody>
                                     <tr>
-                                        <td style="height: 350px; padding: 0;" class="border border-black">
+                                        <td style="height: 420px; padding: 0;" class="border border-black">
                                             <center class="border-bottom border-2 border-black">DESCRIPTION OF GOODS </center>
                                             
                                             <p>{{ data.descriptionOfGood }}</p>
 
+                                            
+                                            {{ i.noOfPkgs }} {{ i.pkgorcases }}
+                                            <br>SAID TO CONTAIN
+                                            <br>{{ i.totalpkgtext }}
+                                            <br><center>{{ i.descriptionOfGood }}</center>
+
+                                            <hr>
                                             <div>
-                                                {% for data in results %}
-                                                <p>S.B. NO.        : {{ data.shippingBillNo }}</p>
-                                                {% endfor %}
+                                                <p>
+                                                    {% for data in results %}
+                                                        S.B. NO.        : {{ data.shippingBillNo }}
+                                                    {% endfor %} 
+                                                     .         .       <b>DT.: {{ i.sbDate|date:"d-m-Y" }}</b>
+                                                </p>
                                                 {% for data in results %}
                                                 <p>IEC NO.         : {{ data.IECno }}</p> 
                                                 {% endfor %}
-                                                <p>IEC NO.         : {{ data.IECno }}</p>
-                                                <p>INVOICE NO.     : {{ data.invoiceNo }}</p>
-                                                <p>HS CODE         : {{ data.hsCode }}</p>
-                                                <p>PO NO           : {{ data.poCode }}</p>
-                                                
+                                                <p>INVOICE NO.     : {{ i.invoiceNo }}   .    .<b>DT.: {{ i.invoiceDate|date:"d-m-Y" }}</b></p>                                            
+                                                <p>HS CODE         : {{ i.hsCode }}</p>
+                                                <p>PO NO           : {{ i.poCode }}</p>                                                
                                             </div>
                                         </td>
                                     </tr>
@@ -180,8 +198,8 @@
                                     </tr>
                                     <tr>
                                         <td style="padding: 0;" class="">
-                                            DATE OF ISSUE
-                                            <p>{{ data.dateOfIssue }}</p>
+                                            <b>DATE OF ISSUE</b>
+                                            <p>{{ i.dateOfIssue|date:"d-m-Y" }}</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -191,23 +209,24 @@
                             <table class="table border-white">
                                 <tbody>
                                     <tr>
-                                        <td style="height: 350px; padding: 0;" class="border border-black">
+                                        <td style="height: 420px; padding: 0;" class="border border-black">
                                             <center class="border-bottom border-2 border-black">WEIGHT</center>
                                             <br> <center>
                                             <div>
-                                                <u>GROSS WT.</u> <br><br>
+                                                <u>GROSS WT.</u> <br>
                                                 {% for data in results %}
-                                                    {{ data.grossWt }} <br>
+                                                    {{ data.grossWt }} {{ i.grossUnit }}<br>
                                                 {% endfor %}
                                             </div>
                                             <div>
-                                                <u>NET WT.</u> <br> <br>
+                                                <br>
+                                                <u>NET WT.</u> <br> 
                                                 {% for data in results %}
-                                                    {{ data.netWt }} <br>
+                                                    {{ data.netWt }} {{ i.netUnit }}<br>
                                                 {% endfor %}
                                             </div> <br><br>
                                             <div>
-                                                CBM : {{ data.CBM }}
+                                                CBM : {{ i.CBM }}
                                             </div><br><br>
                                         </center>
                                         </td>
