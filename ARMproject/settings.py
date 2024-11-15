@@ -95,14 +95,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'armagency',
-    #     'USER': 'armagencyMaster',
-    #     'PASSWORD': 'Pa&&w0Rd_01',
-    #     'HOST': 'armagency.cvaq8s4g8yir.ap-southeast-1.rds.amazonaws.com',
-    #     'PORT': '5432',
-    # }
 }
 
 
@@ -148,18 +140,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 LOGIN_REDIRECT_URL = 'entry'
 LOGOUT_REDIRECT_URL = 'exit'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
-# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# AWS_ACCESS_KEY_ID = 'AKIA2KX4BHZSNAA6M6PI'
-# AWS_SECRET_ACCESS_KEY = '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'
-# AWS_STORAGE_BUCKET_NAME = 'armagency'
-# AWS_S3_SIGNATURE_NAME = 's3v4',
-# AWS_S3_REGION_NAME = 'Asia Pacific (Singapore) ap-southeast-1'
-# AWS_S3_FILE_OVERWRITE = False
-# AWS_DEFAULT_ACL =  None
-# AWS_S3_VERITY = True
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
